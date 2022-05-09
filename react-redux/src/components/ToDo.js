@@ -1,24 +1,29 @@
 import { connect } from 'react-redux';
+import Detail from '../routes/Detail';
 
 import React from 'react';
-import { actionCreators } from '../store';
-import { Link } from 'react-router-dom';
+import { remove } from '../store';
+import { Switch, Route, Link } from 'react-router-dom';
 
 function ToDo({ text, id, onBtnClick }) {
   return (
-    <li>
-      <Link to={`/${id}`}>
-        {text}
+    <>
+      <li>
+        <Link to={`/${id}`}>{text}</Link>
         <button onClick={onBtnClick}>DELETE</button>
-      </Link>
-    </li>
+      </li>
+
+      <Switch>
+        <Route path="/:id" exact component={Detail}></Route>
+      </Switch>
+    </>
   );
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
   console.log(ownProps);
   return {
-    onBtnClick: () => dispatch(actionCreators.deleteToDo(ownProps.id)),
+    onBtnClick: () => dispatch(remove(ownProps.id)),
   };
 }
 
